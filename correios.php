@@ -1,6 +1,7 @@
 <?php
-//teste frete
-function calcular_frete($valor){
+
+//teste para implementar um sistema de frete dos correios.
+function calcular_frete(){
 $cepOrigem = '06787580';
 $cepDestino = '15400043';
 $peso = 1;
@@ -8,8 +9,8 @@ $comprimento = 20;
 $altura = 10;
 $largura = 15;
 $diametro = 0;
-$valor = 1000;
-$codigoServico = '40010'; //SEDEX: 40010 - PAC 41106
+$valor = 0;
+$codigoServico = '41106'; //SEDEX: 40010 - PAC 41106
 
 $url = "http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx/CalcPrecoPrazo?";
 $url .= "nCdEmpresa=";
@@ -29,16 +30,16 @@ $url .= "&nCdServico=$codigoServico";
 $url .= "&nVlDiametro=0";
 $url .= "&StrRetorno=xml";
 
+
 $xml = simplexml_load_file($url);
 return $xml;
 
+
+
+
 }
-var_dump(calcular_frete(
-    $valor = 1000,
 
-));
+$val = calcular_frete();
 
-//$valor = (float) $xml->cServico->Valor;
-//$prazo = (int) $xml->cServico->PrazoEntrega;
+echo "O valor do frete ficou em: " . $val->Servicos->cServico->Valor->__toString() . ".";
 
-//echo "O valor do frete é R$ $valor e o prazo de entrega é de $prazo dias";
